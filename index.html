@@ -15,13 +15,14 @@
     <script>
         function getCurrentWeek() {
             const today = new Date();
-            const week0Start = new Date("2025-02-04"); // Week 0 starts today
             const week1Start = new Date("2025-02-23"); // Week 1 starts Feb 23, 2025
 
-            let currentWeek = "Week 0"; // Default to Week 0
-            if (today >= week1Start) {
+            let currentWeek;
+            if (today < week1Start) {
+                currentWeek = "Week 0";
+            } else {
                 const weekNumber = Math.floor((today - week1Start) / (7 * 24 * 60 * 60 * 1000)) + 1;
-                currentWeek = weekNumber >= 8 ? "Week 8" : `Week ${weekNumber}`;
+                currentWeek = `Week ${Math.min(weekNumber, 8)}`; // Ensures it caps at "Week 8"
             }
 
             document.getElementById("date").textContent = today.toDateString();
@@ -32,3 +33,4 @@
     </script>
 </body>
 </html>
+
